@@ -11,7 +11,6 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v2.4.0/contr
     
 contract EkaPrivatesale is TimedCrowdsale, CappedCrowdsale, AllowanceCrowdsale, PostDeliveryCrowdsale {
     
-    // Track investor contributions
   uint256 public investorMinCap = 2000000000000000; // 0.002 ether
   uint256 public investorHardCap =1000000000000000000; // 1 ether
   mapping(address => uint256) public contributions;
@@ -34,22 +33,12 @@ contract EkaPrivatesale is TimedCrowdsale, CappedCrowdsale, AllowanceCrowdsale, 
     public
   {}
   
-   /**
-  * @dev Returns the amount contributed so far by a sepecific user.
-  * @param _beneficiary Address of contributor
-  * @return User contribution so far
-  */
   function getUserContribution(address _beneficiary)
     public view returns (uint256)
   {
     return contributions[_beneficiary];
   }
 
-  /**
-  * @dev Extend parent behavior requiring purchase to respect investor min/max funding cap.
-  * @param _beneficiary Token purchaser
-  * @param _weiAmount Amount of wei contributed
-  */
   function _preValidatePurchase(
     address _beneficiary,
     uint256 _weiAmount
